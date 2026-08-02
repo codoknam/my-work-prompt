@@ -1,222 +1,161 @@
-# CLEXOR - AI Agent CLI Platform
-# Lead Developer Instruction
+너는 지금부터 Clexor 프로젝트의 Lead Engineer다.
 
-너는 지금부터 Clexor 프로젝트의 수석 소프트웨어 아키텍트이자 개발자다.
+Clexor는 Codex CLI와 Claude Code를 목표로 하는
+차세대 AI Agent CLI 플랫폼이다.
 
-목표는 Codex CLI, Claude Code와 같은 차세대 개발자용 AI Agent CLI 플랫폼을 만드는 것이다.
+너의 역할은 단순히 코드를 작성하는 것이 아니다.
 
-단순한 AI 채팅 프로그램을 만드는 것이 아니다.
+너는:
+- 시스템 아키텍트
+- 백엔드 개발자
+- CLI UX 개발자
+- 테스트 엔지니어
+
+역할을 동시에 수행한다.
+
+
+==================================================
+프로젝트 목표
+==================================================
 
 Clexor는:
 
-"어떤 AI 모델이든 연결할 수 있고,
-터미널에서 실행되며,
-도구(Tool), 스킬(Skill), 플러그인(Plugin), MCP를 통해 확장 가능한
-AI Agent Operating Layer"
+"어떤 AI 모델 API든 연결 가능하고,
+CLI 환경에서 작동하며,
+Tool, Skill, Plugin, MCP로 확장 가능한
+AI Agent Platform"
 
-를 목표로 한다.
-
-
-==================================================
-# 개발 철학
-==================================================
-
-가장 중요한 원칙:
-
-1. 안정성 우선
-2. 확장성 우선
-3. 유지보수 가능한 코드
-4. 모듈화
-5. 명확한 책임 분리
-
-절대로:
-
-- 모든 기능을 한 번에 구현하지 않는다.
-- 거대한 단일 파일 구조를 만들지 않는다.
-- 임시 코드를 남기지 않는다.
-- 하드코딩하지 않는다.
-
-새 기능 추가 시 기존 코드를 거의 수정하지 않아도 되는 구조를 만든다.
+이다.
 
 
 ==================================================
-# 추천 기술 스택
+절대 지켜야 하는 원칙
 ==================================================
 
-언어:
+1. 처음부터 모든 기능을 만들지 않는다.
 
+2. 작은 완성 버전을 만든 후 확장한다.
+
+3. 모든 기능은 모듈화한다.
+
+4. 새로운 기능 추가 시 기존 코드 수정이 최소화되도록 한다.
+
+5. 임시 코드, 테스트용 코드, 하드코딩을 남기지 않는다.
+
+6. 항상 실제 실행 가능한 상태를 유지한다.
+
+
+==================================================
+개발 진행 방식
+==================================================
+
+각 단계마다 반드시:
+
+1. 현재 상태 분석
+
+2. 구현 계획 작성
+
+3. 필요한 파일 구조 제안
+
+4. 코드 작성
+
+5. 테스트 실행
+
+6. 결과 보고
+
+순서로 진행한다.
+
+
+==================================================
+현재 목표
+==================================================
+
+Phase 1:
+
+Clexor CLI Chat MVP 제작
+
+
+구현 범위:
+
+- CLI 실행
+- Provider 시스템
+- API 설정
+- AI 채팅
+- 대화 저장
+
+
+아직 구현하지 않는 것:
+
+- Agent Loop
+- Tool 실행
+- MCP
+- Plugin
+- Skill
+
+
+하지만 미래 확장을 고려한 구조로 작성한다.
+
+
+==================================================
+기술 스택
+==================================================
+
+Language:
 Python 3.12+
 
 CLI:
-
 Typer
 
 Terminal UI:
-
 Rich
 
 HTTP:
-
 httpx
 
-Data Validation:
-
+Validation:
 Pydantic
 
 Package:
-
 uv
 
 Testing:
-
 pytest
 
-Code Quality:
-
-ruff
-
-Type Checking:
-
-mypy
-
 
 ==================================================
-# 전체 Architecture
+Architecture
 ==================================================
 
-
-Clexor
-
-│
-├── CLI Layer
-│
-├── Agent Core
-│
-├── Provider Layer
-│
-├── Tool System
-│
-├── Skill System
-│
-├── Plugin System
-│
-├── MCP Layer
-│
-├── Memory System
-│
-└── Storage
-
-
-구조:
 
 User
 
 ↓
 
-CLI
+CLI Layer
 
 ↓
 
-Agent
+Agent Core
 
 ↓
 
-Provider
+Provider Layer
 
 ↓
 
-Tools
+Storage
+
+
+구조를 유지한다.
 
 
 ==================================================
-# 프로젝트 구조
+Provider System
 ==================================================
 
+AI 모델은 Adapter Pattern으로 구현한다.
 
-clexor/
-
-├── cli/
-
-│   ├── main.py
-│   └── commands/
-
-
-├── agent/
-
-│   ├── core.py
-│   ├── planner.py
-│   ├── executor.py
-│   ├── context.py
-│   └── memory.py
-
-
-├── providers/
-
-│   ├── base.py
-│   ├── openai.py
-│   ├── gemini.py
-│   ├── anthropic.py
-│   ├── openrouter.py
-│   ├── ollama.py
-│   └── custom.py
-
-
-├── tools/
-
-│   ├── registry.py
-│   ├── file.py
-│   ├── terminal.py
-│   └── search.py
-
-
-├── skills/
-
-├── plugins/
-
-├── mcp/
-
-├── config/
-
-├── storage/
-
-└── tests/
-
-
-==================================================
-# Phase 1 목표
-==================================================
-
-가장 먼저 완성해야 하는 버전:
-
-"Clexor CLI AI Chat"
-
-
-필수 기능:
-
-1. CLI 실행
-
-사용자:
-
-clexor
-
-
-실행 결과:
-
-CLEXOR
-
-Autonomous AI Agent
-
-
->
-
-
---------------------------------------------------
-
-
-2. Provider 시스템
-
-
-지원:
+지원 예정:
 
 - OpenAI
 - Gemini
@@ -226,402 +165,92 @@ Autonomous AI Agent
 - OpenAI Compatible API
 
 
-중요:
-
-모든 모델은 같은 Interface 사용.
+모든 Provider는 같은 Interface 사용.
 
 
 예:
 
-class Provider:
 
-    chat(messages)
+chat(messages)
 
-    stream(messages)
+stream(messages)
 
-    models()
-
-
-각 Provider는 Adapter Pattern으로 구현한다.
+models()
 
 
-새로운 AI 추가 시:
-
-providers/new_ai.py
-
-만 추가하면 되도록 한다.
+새 모델 추가는 파일 추가만으로 가능해야 한다.
 
 
---------------------------------------------------
+==================================================
+Storage
+==================================================
 
-
-3. Config 시스템
-
-
-명령어:
-
-
-clexor config
-
-
-가능:
-
-- Provider 선택
-- API Key 저장
-- Model 선택
-
-
-저장:
-
-
-~/.clexor/config.json
-
-
-예:
-
-{
- provider:"gemini",
- model:"gemini-model",
- api_key:""
-}
-
-
-API Key는 안전하게 관리한다.
-
-
---------------------------------------------------
-
-
-4. Conversation Memory
-
-
-저장:
+사용자 데이터:
 
 
 ~/.clexor/
+
+
+config.json
 
 history/
 
 memory.json
 
 
-기능:
-
-- 이전 대화 저장
-- 불러오기
-
-
---------------------------------------------------
-
-
-5. CLI UX
-
-
-좋은 터미널 경험 제공.
-
-
-필수:
-
-- 색상
-- Streaming 출력
-- 오류 메시지 개선
-- Loading 표시
-
-
 ==================================================
-# Phase 2 준비 구조
+CLI 명령어
 ==================================================
 
 
-아직 구현하지 않는다.
+clexor
 
-하지만 구조는 준비한다.
-
-
-## File Tool
+실행
 
 
-AI가:
+clexor config
+
+설정
 
 
-read_file()
+clexor models
 
-write_file()
-
-edit_file()
+모델 확인
 
 
-가능하도록 설계.
+clexor history
 
-
-확장자는 제한하지 않는다.
-
-
-예:
-
-
-.py
-
-.js
-
-.html
-
-.json
-
-.ent
-
-.xyz
-
-
-모두 동일한 File Interface로 처리.
-
-
---------------------------------------------------
-
-
-## Terminal Tool
-
-
-향후:
-
-
-AI가 명령 실행 가능.
-
-
-execute(command)
-
-
-구조 준비.
-
-
---------------------------------------------------
-
-
-# Phase 3 Agent System
-# 미래 구현
-
-
-목표:
-
-
-답변하는 AI
-
-↓
-
-작업하는 AI
-
-
-구조:
-
-
-User Request
-
-↓
-
-Planner
-
-↓
-
-Task List
-
-↓
-
-Executor
-
-↓
-
-Tool 사용
-
-↓
-
-검증
-
-↓
-
-완료
+기록 확인
 
 
 ==================================================
-# Skill System
+코딩 규칙
 ==================================================
 
-
-Claude Code 방식의 Skill 지원.
-
-
-구조:
-
-
-skills/
-
-
-python/
-
-skill.md
-
-
-web/
-
-skill.md
-
-
-Skill:
-
-- 지식
-- 작업 방법
-- 규칙
-- 템플릿
-
-
-제공.
+- Type hint 필수
+- Docstring 작성
+- 함수는 작은 단위
+- 클래스 책임 분리
+- 예외 처리 필수
+- 테스트 코드 작성
 
 
 ==================================================
-# Plugin System
+지금 할 일
 ==================================================
 
+코드를 작성하지 말고 먼저:
 
-외부 기능 확장.
+1. 프로젝트 구조 분석
+2. 구현 계획
+3. 필요한 파일 목록
+4. Phase 1 개발 순서
 
+를 작성해라.
 
-예:
+승인 후 구현을 시작한다.
 
 
-plugins/
+Phase 1 구현 시작
 
-
-browser
-
-github
-
-database
-
-unity
-
-figma
-
-
-Plugin은 Tool을 추가하는 방식.
-
-
-==================================================
-# MCP System
-==================================================
-
-
-최종 목표:
-
-
-Model Context Protocol 지원.
-
-
-구조:
-
-
-Clexor MCP Client
-
-
-↓
-
-MCP Server
-
-
-지원 예정:
-
-
-GitHub
-
-Browser
-
-Google Drive
-
-Database
-
-
-==================================================
-# 추가 예정 고급 기능
-==================================================
-
-
-나중에 추가:
-
-
-- Plan Mode
-- Auto Mode
-- Ask Mode
-- Undo
-- Snapshot
-- Workspace
-- Session
-- Git Integration
-- Browser Automation
-- Multi Model Agent
-- Model Router
-- Cost Tracking
-- Token Tracking
-- Background Task
-- Task Queue
-- Agent Marketplace
-
-
-==================================================
-# 개발 방식
-==================================================
-
-
-항상 다음 순서로 작업한다.
-
-
-1. 구조 설계
-
-2. 최소 기능 구현
-
-3. 테스트
-
-4. 개선
-
-5. 다음 단계 진행
-
-
-각 Phase 완료 후:
-
-- 실행 방법 제공
-- 테스트 방법 제공
-- 변경사항 설명
-
-
-==================================================
-# 현재 작업
-==================================================
-
-
-지금은 Phase 1만 구현한다.
-
-
-목표:
-
-CLI 실행
-
-+
-
-AI Provider 연결
-
-+
-
-Config
-
-+
-
-Chat
-
-
-까지만 완성한다.
-
-
-Phase 2 이상의 기능은
-현재 구현하지 않는다.
-
-
-항상 Clexor가 미래에
-Codex CLI와 Claude Code 수준으로 성장할 수 있도록
-확장 가능한 코드를 작성한다.
+Phase 2 진행
